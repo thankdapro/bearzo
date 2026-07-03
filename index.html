@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BearzoMC — bearzo1_yt's minecraft server</title>
+<meta name="description" content="The official Minecraft server of bearzo1_yt. Survival, PvP, minigames, and certified chaos." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'sans-serif'],
+          display: ['Space Grotesk', 'sans-serif'],
+          mono: ['JetBrains Mono', 'monospace'],
+          pixel: ['"Press Start 2P"', 'monospace'],
+        },
+        colors: {
+          bear: {
+            bg: '#0a0a0a',
+            ink: '#f5f1ea',
+            red: '#e8e3da',
+            grass: '#f5f1ea',
+            grassDark: '#9a958c',
+            dirt: '#5a5a5a',
+            cream: '#ede4d3',
+            mud: '#141414',
+          }
+        }
+      }
+    }
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    background: #0a0a0a;
+    color: #f5f1ea;
+    overflow-x: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Grayscale the profile photo for the B&W theme */
+  .bw-photo { filter: grayscale(1) contrast(1.05); }
+
+  /* Grain overlay */
+  .grain::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  }
+
+  /* Pixelated grass top border (Minecraft vibe) */
+  .grass-border {
+    background-image: linear-gradient(to bottom, #5BC236 0%, #5BC236 30%, #3d8c22 30%, #3d8c22 60%, #2a5e16 60%, #2a5e16 100%);
+    height: 8px;
+    image-rendering: pixelated;
+  }
+
+  /* Block grid background pattern */
+  .blocks-bg {
+    background-color: #0a0d0a;
+    background-image:
+      linear-gradient(rgba(91, 194, 54, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(91, 194, 54, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Aurora background — static */
+  .aurora {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .aurora::before, .aurora::after {
+    content: '';
+    position: absolute;
+    width: 60vw;
+    height: 60vw;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.3;
+  }
+  .aurora::before {
+    background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 70%);
+    top: -20%;
+    left: -10%;
+  }
+  .aurora::after {
+    background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 70%);
+    bottom: -30%;
+    right: -10%;
+  }
+
+  /* Gradient text — static, white to gray */
+  .grad-text {
+    background: linear-gradient(110deg, #ffffff 0%, #888888 50%, #ffffff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Marquee */
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    gap: 2rem;
+  }
+  .marquee__track {
+    flex-shrink: 0;
+    display: flex;
+    gap: 2rem;
+    min-width: 100%;
+    animation: scroll 30s linear infinite;
+  }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }
+
+  /* Glow card */
+  .glow-card {
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .glow-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: -1;
+  }
+  .glow-card:hover::before { opacity: 1; }
+  .glow-card:hover { transform: translateY(-4px); }
+
+  /* Shine button */
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-shine::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s;
+  }
+  .btn-shine:hover::after { left: 100%; }
+
+  /* Pixel-style button (Minecraft button feel) */
+  .btn-pixel {
+    box-shadow:
+      inset 0 -4px 0 rgba(0,0,0,0.3),
+      inset 0 2px 0 rgba(255,255,255,0.15);
+    transition: all 0.1s;
+  }
+  .btn-pixel:active {
+    transform: translateY(2px);
+    box-shadow:
+      inset 0 -2px 0 rgba(0,0,0,0.3),
+      inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+
+  /* Tape */
+  .tape {
+    position: absolute;
+    background: rgba(255, 220, 100, 0.25);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 220, 100, 0.4);
+    transform: rotate(-3deg);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .sticker { transition: transform 0.3s; }
+  .sticker:hover { transform: rotate(8deg) scale(1.05); }
+
+  /* Reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* Scribble underline */
+  .scribble {
+    position: relative;
+    display: inline-block;
+  }
+  .scribble::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: -4px;
+    right: -4px;
+    height: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12'%3E%3Cpath d='M2 8 Q 50 2, 100 7 T 198 5' stroke='%23ffffff' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0a0a0a; }
+  ::-webkit-scrollbar-thumb { background: #f5f1ea; border-radius: 4px; }
+
+  .tilt-l { transform: rotate(-1.5deg); }
+  .tilt-r { transform: rotate(1.5deg); }
+
+  /* Status dot — gentle breathe, not flashy */
+  @keyframes breathe {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.75; }
+  }
+  .pulse-dot { animation: breathe 4s ease-in-out infinite; }
+
+  /* Mode card hover */
+  .mode-card {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .mode-card:hover .mode-icon {
+    transform: scale(1.15) rotate(-6deg);
+  }
+  .mode-icon { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+  /* Pixelated decorative blocks */
+  .pixel-block {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+
+  /* Copy IP pulse */
+  @keyframes copyFlash {
+    0% { background-color: rgba(255, 255, 255, 0); }
+    50% { background-color: rgba(255, 255, 255, 0.2); }
+    100% { background-color: rgba(255, 255, 255, 0); }
+  }
+  .copy-flash { animation: copyFlash 0.6s ease-out; }
+</style>
+</head>
+<body class="grain">
+
+<!-- Nav -->
+<nav class="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl bg-black/50 border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2 group">
+      <div class="w-9 h-9 rounded-md bg-white border-2 border-white/80 flex items-center justify-center font-bold text-black text-sm pixel-block relative">
+        B
+        <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-white rounded-full border-2 border-bear-bg pulse-dot"></span>
+      </div>
+      <div class="flex flex-col leading-none">
+        <span class="font-display font-bold text-lg tracking-tight">BearzoMC</span>
+        <span class="font-mono text-[10px] text-bear-ink/50">by bearzo1_yt</span>
+      </div>
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm text-bear-ink/70">
+      <a href="#about" class="hover:text-bear-grass transition">about</a>
+      <a href="#community" class="hover:text-bear-grass transition">community</a>
+    </div>
+    <button onclick="copyIP()" class="btn-shine btn-pixel bg-bear-grass hover:bg-bear-grass/90 text-black text-sm font-bold px-4 py-2 rounded-md flex items-center gap-2 transition">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span id="navCopyText">Copy IP</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="relative min-h-screen flex items-center pt-24 pb-12 px-6">
+  <div class="aurora"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto w-full">
+    <div class="grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7">
+        <div class="reveal flex items-center gap-3 mb-6 flex-wrap">
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-bear-grass/10 border border-bear-grass/30 backdrop-blur-sm">
+            <span class="w-2 h-2 rounded-full bg-bear-grass pulse-dot"></span>
+            <span class="text-xs font-mono tracking-wider uppercase text-bear-grass">server online</span>
+          </div>
+          <span class="text-xs font-mono text-bear-ink/50">version 1.21.x</span>
+        </div>
+
+        <h1 class="reveal font-display font-bold text-5xl sm:text-7xl lg:text-8xl leading-[0.95] tracking-tight mb-6">
+          welcome to<br/>
+          <span class="grad-text">bearzo's</span> world.
+        </h1>
+
+        <p class="reveal text-lg md:text-xl text-bear-ink/70 max-w-xl mb-10 leading-relaxed">
+          the official minecraft server of bearzo1_yt — survival, pvp, and
+          whatever weird thing we cooked up that week.
+          <span class="text-bear-ink">come ruin our economy.</span>
+        </p>
+
+        <!-- IP block -->
+        <div class="reveal mb-8 max-w-xl">
+          <div class="font-mono text-xs uppercase tracking-[0.3em] text-bear-grass mb-2">// java edition</div>
+          <div id="ipBox" class="group flex items-center gap-3 bg-black/60 border-2 border-bear-grass/40 hover:border-bear-grass rounded-xl p-4 cursor-pointer transition" onclick="copyIP()">
+            <div class="flex-1 min-w-0">
+              <div class="font-mono text-lg md:text-2xl font-bold text-bear-ink truncate" id="ipText">duhbearsquad.ddns.net:4023</div>
+              <div class="text-xs font-mono text-bear-ink/50">click to copy</div>
+            </div>
+            <span id="copyLabel" class="font-mono text-xs px-3 py-1.5 rounded bg-bear-grass/20 text-bear-grass border border-bear-grass/30 group-hover:bg-bear-grass group-hover:text-black transition whitespace-nowrap">
+              COPY IP
+            </span>
+          </div>
+          <div class="mt-3 font-mono text-xs text-bear-ink/50">
+            <span class="text-bear-ink/40 uppercase tracking-wider">bedrock:</span>
+            <span class="text-bear-ink/80">duhbearsquad.ddns.net</span>
+            <span class="text-bear-ink/40">·</span>
+            <span class="text-bear-ink/40 uppercase tracking-wider">port:</span>
+            <span class="text-bear-ink/80">4023</span>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <a href="#" target="_blank" rel="noopener" class="btn-shine btn-pixel group inline-flex items-center gap-3 bg-bear-grass hover:bg-bear-grass/90 text-black font-bold px-7 py-4 rounded-md transition shadow-lg shadow-bear-grass/30 uppercase tracking-wider text-sm">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/></svg>
+            Join Discord
+            <span class="opacity-0 group-hover:opacity-100 transition -translate-x-2 group-hover:translate-x-0">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Profile card -->
+      <div class="lg:col-span-5 relative">
+        <div class="reveal relative">
+          <div class="absolute -inset-4 bg-gradient-to-br from-white/15 to-transparent rounded-3xl blur-2xl"></div>
+          <div class="relative bg-bear-mud/80 backdrop-blur-xl border border-white/10 rounded-3xl p-5 shadow-2xl">
+            <div class="aspect-square rounded-2xl bg-gradient-to-br from-neutral-400 via-neutral-600 to-neutral-800 relative overflow-hidden">
+              <img src="bearpfp.png" alt="bearzo1_yt profile" class="bw-photo absolute inset-0 w-full h-full object-cover" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              <span class="absolute top-3 left-3 text-xs font-mono bg-black/50 backdrop-blur px-2 py-1 rounded text-white">@bearzo1_yt</span>
+              <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
+                <span class="font-display font-bold text-lg">BearzoMC</span>
+                <span class="text-[10px] font-mono bg-white px-2 py-1 rounded text-black font-bold tracking-wider uppercase">owner</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ABOUT -->
+<section id="about" class="py-24 px-6 relative">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="reveal">
+        <div class="font-mono text-xs uppercase tracking-[0.3em] text-bear-grass mb-3">// the lore</div>
+        <h2 class="font-display font-bold text-5xl md:text-6xl tracking-tight mb-8">why bearzoMC?</h2>
+        <div class="space-y-5 text-lg text-bear-ink/80 leading-relaxed">
+          <p>
+            started [PLACEHOLDER YEAR] as a tiny private smp for bearzo and his friends.
+            chat kept asking to join, so we opened the gates. somehow it stuck.
+          </p>
+          <p>
+            now we run [X] gamemodes on dedicated hardware, with a (mostly) sane mod team
+            and weekly events that range from build battles to "everyone tries to break the server."
+            <span class="text-bear-ink font-medium">small enough to know your name. big enough to never have a dull day.</span>
+          </p>
+          <p class="font-mono text-base text-bear-ink/60">
+            ➜ no pay-to-win, ever. cosmetics only.<br/>
+            ➜ active staff in [TIMEZONE / multiple regions]<br/>
+            ➜ open-source plugins on github: <span class="text-bear-grass">[placeholder]</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="hidden lg:flex justify-center">
+        <div class="w-80 bg-bear-cream rounded-sm p-4 shadow-2xl rotate-[-3deg] sticker">
+          <div class="w-full aspect-square bg-gradient-to-br from-neutral-400 via-neutral-600 to-neutral-800 rounded-sm flex items-center justify-center text-8xl grayscale">🏰</div>
+          <p class="font-mono text-sm text-black/70 text-center mt-3">spawn build · season [X]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section id="community" class="py-24 px-6 relative">
+  <div class="max-w-7xl mx-auto">
+    <div class="reveal text-center mb-16">
+      <div class="font-mono text-xs uppercase tracking-[0.3em] text-bear-grass mb-3">// hang out</div>
+      <h2 class="font-display font-bold text-5xl md:text-6xl tracking-tight">the community lives here.</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+      <a href="#" target="_blank" rel="noopener" class="reveal glow-card group relative rounded-2xl p-8 bg-gradient-to-br from-white/10 to-transparent border border-white/15 hover:border-white/50 transition">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="#f5f1ea" class="mb-6"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/></svg>
+        <div class="font-display font-bold text-2xl mb-1">Discord</div>
+        <div class="text-bear-ink/60 text-sm mb-4">the main hub</div>
+        <div class="font-mono text-xs text-bear-ink/70 flex items-center gap-1">
+          discord.gg/[placeholder] <span class="group-hover:translate-x-1 transition">→</span>
+        </div>
+      </a>
+
+      <a href="https://youtube.com/@bearzo1_yt" target="_blank" rel="noopener" class="reveal glow-card group relative rounded-2xl p-8 bg-gradient-to-br from-white/10 to-transparent border border-white/15 hover:border-white/50 transition">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="#f5f1ea" class="mb-6"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.546 15.568V8.432L15.818 12l-6.272 3.568z"/></svg>
+        <div class="font-display font-bold text-2xl mb-1">YouTube</div>
+        <div class="text-bear-ink/60 text-sm mb-4">server highlights + vlogs</div>
+        <div class="font-mono text-xs text-bear-ink/70 flex items-center gap-1">
+          @bearzo1_yt <span class="group-hover:translate-x-1 transition">→</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 px-6 relative overflow-hidden">
+  <div class="max-w-5xl mx-auto relative z-10">
+    <div class="reveal bg-gradient-to-br from-bear-mud to-black border border-white/10 rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
+      <div class="absolute -top-32 -right-32 w-96 h-96 bg-white/15 rounded-full blur-3xl"></div>
+
+      <div class="relative">
+        <h2 class="font-display font-bold text-5xl md:text-6xl tracking-tight mb-5 leading-[0.95]">
+          your spawn point<br/>
+          <span class="grad-text">is waiting.</span>
+        </h2>
+        <p class="text-lg text-bear-ink/70 max-w-xl mx-auto mb-10">
+          paste the ip, join the discord, lose a weekend.
+        </p>
+
+        <!-- big IP -->
+        <div class="max-w-md mx-auto mb-8 cursor-pointer group" onclick="copyIP()">
+          <div class="bg-black/60 border-2 border-bear-grass/40 hover:border-bear-grass rounded-2xl p-5 transition">
+            <div class="font-mono text-xs uppercase tracking-wider text-bear-ink/50 mb-1">server ip — click to copy</div>
+            <div class="font-mono text-xl md:text-3xl font-bold text-bear-grass break-all">duhbearsquad.ddns.net:4023</div>
+            <div class="font-mono text-[11px] text-bear-ink/40 mt-2">bedrock · duhbearsquad.ddns.net · port 4023</div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-4 mb-10">
+          <a href="#" target="_blank" rel="noopener" class="btn-shine btn-pixel inline-flex items-center gap-3 bg-bear-grass hover:bg-bear-grass/90 text-black font-bold px-8 py-4 rounded-md transition text-lg shadow-2xl shadow-bear-grass/40 uppercase tracking-wider">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/></svg>
+            Join Discord
+          </a>
+        </div>
+
+        <div class="pt-8 border-t border-white/10 max-w-md mx-auto">
+          <div class="text-xs font-mono text-bear-ink/50 mb-3 uppercase tracking-wider">staff / partnership inquiries</div>
+          <a href="mailto:staff@bearzomc.net" class="font-display text-2xl text-bear-ink hover:text-bear-grass transition">
+            staff@bearzomc.net
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-12 px-6 border-t border-white/5">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-md bg-white border border-white/80 flex items-center justify-center font-bold text-black text-sm">B</div>
+      <div class="flex flex-col leading-none">
+        <span class="font-display font-bold">BearzoMC</span>
+        <span class="text-bear-ink/30 font-mono text-[10px]">© 2026 bearzo1_yt</span>
+      </div>
+    </div>
+    <div class="font-mono text-xs text-bear-ink/40 text-center">
+      not affiliated with mojang or microsoft. minecraft is a trademark of mojang ab.
+    </div>
+    <div class="flex gap-4 text-bear-ink/40 text-xs font-mono">
+      <a href="#" class="hover:text-bear-grass transition">rules</a>
+      <a href="#" class="hover:text-bear-grass transition">privacy</a>
+      <a href="#" class="hover:text-bear-grass transition">terms</a>
+      <a href="#" class="hover:text-bear-grass transition">status</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Copy IP
+  const SERVER_IP = 'duhbearsquad.ddns.net:4023';
+  function copyIP() {
+    navigator.clipboard.writeText(SERVER_IP).then(() => {
+      const labels = ['copyLabel', 'navCopyText'];
+      const navBtn = document.getElementById('navCopyText');
+      const lbl = document.getElementById('copyLabel');
+      const ipBox = document.getElementById('ipBox');
+      if (navBtn) {
+        const orig = navBtn.textContent;
+        navBtn.textContent = '✓ Copied!';
+        setTimeout(() => navBtn.textContent = orig, 1500);
+      }
+      if (lbl) {
+        const orig = lbl.textContent;
+        lbl.textContent = '✓ COPIED!';
+        lbl.classList.add('bg-bear-grass', 'text-black');
+        setTimeout(() => {
+          lbl.textContent = orig;
+          lbl.classList.remove('bg-bear-grass', 'text-black');
+        }, 1500);
+      }
+      if (ipBox) {
+        ipBox.classList.add('copy-flash');
+        setTimeout(() => ipBox.classList.remove('copy-flash'), 600);
+      }
+    }).catch(() => {
+      alert('IP: ' + SERVER_IP);
+    });
+  }
+
+  // Fake live player count — replace with real API ping if available
+  function jitterPlayers() {
+    const base = 0; // unknown — show -- until real source plugged in
+    const el = document.getElementById('onlineCount');
+    const heroEl = document.getElementById('playerCountHero');
+    // leave as -- / [XX] placeholders so it's clearly unknown
+  }
+  jitterPlayers();
+</script>
+</body>
+</html>
