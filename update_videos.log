@@ -1,0 +1,46 @@
+[2026-07-31 22:04:47] === update starting ===
+[2026-07-31 22:04:47] parsed 16 videos; top 6:
+[2026-07-31 22:04:47]   #1  1.5K+ views · 3 yr ago   FNaF Security Breach #1 (3ODYOhY5mz4)
+[2026-07-31 22:04:47]   #2  1.5K+ views · 3 yr ago   Yessssssss curse that rainbow! (IlxxG7rHb0c)
+[2026-07-31 22:04:47]   #3    1K+ views · 3 yr ago   FNaF SB #2 (ZYItjY5PrYY)
+[2026-07-31 22:04:47]   #4   500+ views · 1 mo ago   Defeating Minecraft's Most TOXIC Hacker...(Duh Bear Squad SM (E3PzRuzePIQ)
+[2026-07-31 22:04:47]   #5   400+ views · 1 yr ago   We got duh Doom! 😈🤭 (a few times lol) (gIzqTZM2MrA)
+[2026-07-31 22:04:47]   #6   300+ views · 5 mo ago   Destroying My Own EMPIRE (Duh Bear Squad SMP) (hLaJaTx4Ydg)
+[2026-07-31 22:04:47] --dry-run: not writing. New array would be:
+const VIDEOS=[
+  {id:"3ODYOhY5mz4",title:"FNaF Security Breach #1",views:"1.5K+",date:"3 yr ago"},
+  {id:"IlxxG7rHb0c",title:"Yessssssss curse that rainbow!",views:"1.5K+",date:"3 yr ago"},
+  {id:"ZYItjY5PrYY",title:"FNaF SB #2",views:"1K+",date:"3 yr ago"},
+  {id:"E3PzRuzePIQ",title:"Defeating Minecraft's Most TOXIC Hacker...(Duh Bear Squad SMP)",views:"500+",date:"1 mo ago"},
+  {id:"gIzqTZM2MrA",title:"We got duh Doom! 😈🤭 (a few times lol)",views:"400+",date:"1 yr ago"},
+  {id:"hLaJaTx4Ydg",title:"Destroying My Own EMPIRE (Duh Bear Squad SMP)",views:"300+",date:"5 mo ago"}
+]
+[2026-07-31 22:05:05] === update starting ===
+[2026-07-31 22:05:05] parsed 16 videos; top 6:
+[2026-07-31 22:05:05]   #1  1.5K+ views · 3 yr ago   FNaF Security Breach #1 (3ODYOhY5mz4)
+[2026-07-31 22:05:05]   #2  1.5K+ views · 3 yr ago   Yessssssss curse that rainbow! (IlxxG7rHb0c)
+[2026-07-31 22:05:05]   #3    1K+ views · 3 yr ago   FNaF SB #2 (ZYItjY5PrYY)
+[2026-07-31 22:05:05]   #4   500+ views · 1 mo ago   Defeating Minecraft's Most TOXIC Hacker...(Duh Bear Squad SM (E3PzRuzePIQ)
+[2026-07-31 22:05:05]   #5   400+ views · 1 yr ago   We got duh Doom! 😈🤭 (a few times lol) (gIzqTZM2MrA)
+[2026-07-31 22:05:05]   #6   300+ views · 5 mo ago   Destroying My Own EMPIRE (Duh Bear Squad SMP) (hLaJaTx4Ydg)
+[2026-07-31 22:05:05] updated: /Users/bgaurav/Downloads/Frost Storage/Claude Projects/bearzo.club/index.html
+[2026-07-31 22:05:05] updated: /Users/bgaurav/Desktop/bearzo-github/index.html
+[2026-07-31 22:05:05] updated: /Users/bgaurav/Desktop/bearzo1-yt.html
+[2026-07-31 22:05:05] updated: /tmp/bearzo/index.html
+[2026-07-31 22:05:05] === done: 4 file(s) updated ===
+[2026-07-31 22:05:05] NOTE: re-upload index.html from ~/Desktop/bearzo-github/ to GitHub Pages to publish.
+[2026-07-31 22:36:37] === update starting ===
+[2026-07-31 22:36:38] parsed 16 videos; top 6:
+[2026-07-31 22:36:38]   #1  1.5K+ views · 3 yr ago   FNaF Security Breach #1 (3ODYOhY5mz4)
+[2026-07-31 22:36:38]   #2  1.5K+ views · 3 yr ago   Yessssssss curse that rainbow! (IlxxG7rHb0c)
+[2026-07-31 22:36:38]   #3    1K+ views · 3 yr ago   FNaF SB #2 (ZYItjY5PrYY)
+[2026-07-31 22:36:38]   #4   500+ views · 1 mo ago   Defeating Minecraft's Most TOXIC Hacker...(Duh Bear Squad SM (E3PzRuzePIQ)
+[2026-07-31 22:36:38]   #5   400+ views · 1 yr ago   We got duh Doom! 😈🤭 (a few times lol) (gIzqTZM2MrA)
+[2026-07-31 22:36:38]   #6   300+ views · 5 mo ago   Destroying My Own EMPIRE (Duh Bear Squad SMP) (hLaJaTx4Ydg)
+[2026-07-31 22:36:38] stats -> videos:16+  top video:1.5K+
+[2026-07-31 22:36:38] no change: /Users/bgaurav/Downloads/Frost Storage/Claude Projects/bearzo.club/index.html
+[2026-07-31 22:36:38] no change: /Users/bgaurav/Desktop/bearzo-github/index.html
+[2026-07-31 22:36:38] no change: /Users/bgaurav/Desktop/bearzo1-yt.html
+[2026-07-31 22:36:38] no change: /tmp/bearzo/index.html
+[2026-07-31 22:36:38] === done: 0 file(s) updated ===
+[2026-07-31 22:36:38] NOTE: re-upload index.html from ~/Desktop/bearzo-github/ to GitHub Pages to publish.

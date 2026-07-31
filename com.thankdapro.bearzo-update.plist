@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.thankdapro.bearzo-update</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>/Users/bgaurav/Downloads/Frost Storage/Claude Projects/bearzo.club/update_videos.py</string>
+  </array>
+
+  <!-- Every Sunday at 12:00 noon. If the Mac is asleep then, it runs on next wake. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key><integer>0</integer>
+    <key>Hour</key><integer>12</integer>
+    <key>Minute</key><integer>0</integer>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <false/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/bgaurav/Downloads/Frost Storage/Claude Projects/bearzo.club/launchd-bearzo.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/bgaurav/Downloads/Frost Storage/Claude Projects/bearzo.club/launchd-bearzo.log</string>
+</dict>
+</plist>
