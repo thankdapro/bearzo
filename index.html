@@ -172,6 +172,43 @@ body.a11y .hero-scene{position:relative}
 body.a11y .hero-layers,body.a11y .hero-scroll-cue{display:none}
 body.a11y .hero-veil{background:rgba(10,10,10,.88)}
 
+/* ===== full-bleed sticky rollercoaster panel (no content, just the shot) ===== */
+.rc-sticky{position:relative;height:170vh;overflow:clip}
+.rc-sticky__scene{position:sticky;top:0;height:100svh;min-height:420px;overflow:hidden}
+.rc-sticky__scene img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.rc-sticky__scene::after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(to bottom,#0a0a0a 0%,rgba(10,10,10,0) 20%,rgba(10,10,10,0) 76%,#0a0a0a 100%)}
+@media (max-width:767px){.rc-sticky{height:130vh}.rc-sticky__scene{min-height:340px}}
+@media (prefers-reduced-motion:reduce){
+  .rc-sticky{height:auto;overflow:visible}
+  .rc-sticky__scene{position:relative;height:auto;min-height:0}
+  .rc-sticky__scene img{height:auto}
+}
+body.a11y .rc-sticky{height:auto;overflow:visible}
+body.a11y .rc-sticky__scene{position:relative;height:auto;min-height:0}
+body.a11y .rc-sticky__scene img{height:auto}
+
+/* ===== easter egg: the bear (click him once) ===== */
+.bear-egg{position:absolute;top:-16px;right:-46px;width:214px;height:auto;z-index:1;
+  opacity:.075;transition:opacity .55s ease;user-select:none;-webkit-user-drag:none;
+  -webkit-mask-image:linear-gradient(to bottom,#000 58%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 58%,transparent 100%)}
+.bear-egg:hover{opacity:.13}
+.bear-egg.is-gone{opacity:0 !important;pointer-events:none}
+@media (max-width:767px){.bear-egg{width:150px;right:-40px;top:-24px}}
+@media (prefers-reduced-motion:reduce){.bear-egg{transition:none}}
+body.a11y .bear-egg{display:none}
+.bear-run{position:fixed;left:0;bottom:clamp(6px,4vh,52px);height:clamp(118px,19vw,228px);width:auto;
+  z-index:120;pointer-events:none;will-change:transform;
+  filter:drop-shadow(0 18px 26px rgba(0,0,0,.6));animation:bearRun 2s linear forwards}
+@keyframes bearRun{
+  0%{transform:translate3d(-42vw,0,0) rotate(0deg)}
+  25%{transform:translate3d(-3vw,-11px,0) rotate(-1.2deg)}
+  50%{transform:translate3d(36vw,0,0) rotate(0deg)}
+  75%{transform:translate3d(75vw,-11px,0) rotate(1.2deg)}
+  100%{transform:translate3d(116vw,0,0) rotate(0deg)}
+}
+
 /* ---- accessibility mode (opt-in high contrast + no motion) ---- */
 #a11yToggle{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;
   border:0;background:none;border-radius:8px;color:hsla(38,35%,94%,.55);flex:none;cursor:pointer}
@@ -276,8 +313,6 @@ window.imgFail=function(img){ if(!img||img.dataset.failed) return; img.dataset.f
     <div class="hero-layers" aria-hidden="true">
       <figure class="hlayer" data-hero-layer data-start="400" data-end="-640" style="top:9%;left:3%;width:250px;z-index:11">
         <img src="images/gaming-setup.jpg" alt="" loading="eager" decoding="async" /></figure>
-      <figure class="hlayer" data-hero-layer data-start="660" data-end="-430" data-hero-mobile="off" style="top:5%;left:75%;width:232px;z-index:11">
-        <img src="images/rollercoaster.jpg" alt="" loading="eager" decoding="async" /></figure>
       <figure class="hlayer" data-hero-layer data-start="560" data-end="-780" style="top:60%;left:6%;width:286px;z-index:13">
         <img src="images/movie-night.jpg" alt="" loading="eager" decoding="async" /></figure>
       <figure class="hlayer" data-hero-layer data-start="840" data-end="-330" data-hero-mobile="off" style="top:57%;left:71%;width:268px;z-index:13">
@@ -363,7 +398,10 @@ window.imgFail=function(img){ if(!img||img.dataset.failed) return; img.dataset.f
 </section>
 
 <!-- GAMES -->
-<section id="games" class="py-20 px-6 relative">
+<section id="games" class="py-20 px-6 relative overflow-hidden">
+  <!-- easter egg: click the bear -->
+  <img src="images/bear-face.webp" alt="" aria-hidden="true" data-egg="bear" width="520" height="518"
+       class="bear-egg" decoding="async" />
   <div class="max-w-7xl mx-auto">
     <div class="reveal mb-12">
       <div class="font-mono text-xs uppercase tracking-[0.3em] text-bear-grass/90 mb-3">// the rotation</div>
@@ -394,18 +432,19 @@ window.imgFail=function(img){ if(!img||img.dataset.failed) return; img.dataset.f
     <div class="grid lg:grid-cols-2 gap-6">
       <div class="reveal">
         <div class="font-mono text-xs uppercase tracking-[0.3em] text-bear-grass/90 mb-2">// java edition</div>
-        <div class="group flex items-center gap-3 bg-black/60 border-2 border-white/15 hover:border-bear-grass/60 rounded-xl p-4 cursor-pointer transition" data-copy="duhbearsquad.ddns.net:4023" id="ipBox" role="button" tabindex="0" aria-label="Copy Java server IP duhbearsquad.ddns.net:4023 to clipboard">
+        <div class="group flex items-center gap-3 bg-black/60 border-2 border-white/15 hover:border-bear-grass/60 rounded-xl p-4 cursor-pointer transition" data-copy="DuhBearzoSquad.ddns.net:4609" id="ipBox" role="button" tabindex="0" aria-label="Copy Java server IP DuhBearzoSquad.ddns.net:4609 to clipboard">
           <div class="flex-1 min-w-0">
-            <div class="font-mono text-lg md:text-2xl font-bold text-bear-ink" style="word-break:break-all">duhbearsquad.ddns.net:4023</div>
+            <div class="font-mono text-lg md:text-2xl font-bold text-bear-ink" style="word-break:break-all">DuhBearzoSquad.ddns.net:4609</div>
             <div class="text-xs font-mono text-bear-ink/50">click or press enter to copy</div>
           </div>
           <span class="copyLabel font-mono text-xs px-3 py-1.5 rounded bg-white/10 text-bear-ink border border-white/20 group-hover:bg-bear-grass group-hover:text-black transition whitespace-nowrap">COPY IP</span>
         </div>
         <span id="copyLive" class="sr-only" role="status" aria-live="polite"></span>
         <div class="mt-3 font-mono text-xs text-bear-ink/60">
-          <span class="uppercase tracking-wider text-bear-ink/60">bedrock:</span> <span class="text-bear-ink/80">duhbearsquad.ddns.net</span>
-          <span class="text-bear-ink/60">·</span> <span class="uppercase tracking-wider text-bear-ink/60">port:</span> <span class="text-bear-ink/80">4023</span>
+          <span class="uppercase tracking-wider text-bear-ink/60">bedrock:</span> <span class="text-bear-ink/80">duhbearzosquad.ddns.net</span>
+          <span class="text-bear-ink/60">·</span> <span class="uppercase tracking-wider text-bear-ink/60">port:</span> <span class="text-bear-ink/80">4609</span>
         </div>
+        <div class="mt-2 font-mono text-xs text-bear-ink/60"><span class="uppercase tracking-wider text-bear-ink/60">fullbright:</span> <span class="text-bear-grass">/trigger ToggleFullBright</span></div>
         <figure class="reveal relative rounded-2xl overflow-hidden border border-white/10 mt-6" data-shot="campfire">
           <img src="images/campfire.jpg" alt="A quiet night around the campfire on the duh bear squad SMP" class="w-full block" loading="lazy" decoding="async" />
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.42),transparent 46%);pointer-events:none"></div>
@@ -429,6 +468,13 @@ window.imgFail=function(img){ if(!img||img.dataset.failed) return; img.dataset.f
   </div>
 </section>
 
+<!-- ROLLERCOASTER: full-bleed sticky panel, nothing on top of it -->
+<div class="rc-sticky" data-shot="rollercoaster">
+  <div class="rc-sticky__scene">
+    <img src="images/rollercoaster.jpg" alt="The duh bear squad riding a rollercoaster together on the SMP" loading="lazy" decoding="async" />
+  </div>
+</div>
+
 <!-- COMMUNITY -->
 <section id="community" class="py-20 px-6 relative">
   <div class="max-w-7xl mx-auto">
@@ -436,10 +482,6 @@ window.imgFail=function(img){ if(!img||img.dataset.failed) return; img.dataset.f
       <div class="font-mono text-xs uppercase tracking-[0.3em] text-bear-grass/90 mb-3">// hang out</div>
       <h2 class="font-display font-bold text-5xl md:text-6xl tracking-tight">the squad lives here.</h2>
     </div>
-    <figure class="reveal relative rounded-2xl overflow-hidden border border-white/10 mb-10 max-w-6xl mx-auto" data-shot="rollercoaster">
-      <img src="images/rollercoaster.jpg" alt="The duh bear squad riding together on the SMP" class="w-full block" loading="lazy" decoding="async" />
-      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.42),transparent 46%);pointer-events:none"></div>
-    </figure>
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
       <a href="https://discord.gg/fMZnRZEeT8" target="_blank" rel="noopener" class="reveal glow-card group rounded-2xl p-8 bg-gradient-to-br from-white/10 to-transparent border border-white/15 hover:border-bear-grass/60 transition">
         <svg width="38" height="38" viewBox="0 0 24 24" fill="currentColor" class="mb-6 text-bear-ink group-hover:text-[#5865F2] transition-colors duration-300"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
@@ -493,8 +535,6 @@ window.imgFail=function(img){ if(!img||img.dataset.failed) return; img.dataset.f
   <div class="max-w-5xl mx-auto relative z-10">
     <div class="reveal bg-gradient-to-br from-bear-mud to-black border border-white/10 rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
       <div class="absolute -top-32 -right-32 w-96 h-96 bg-bear-grass/20 rounded-full blur-3xl"></div>
-      <!-- hidden bear squad: nawafield & itsmapogo (skins via mc-heads, ~7% opacity easter egg) -->
-      <img src="data:image/png;base64,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" alt="" aria-hidden="true" data-player="nawafield" style="position:absolute;top:-94px;right:10px;height:150px;width:auto;transform:rotate(180deg);opacity:.055;pointer-events:none;image-rendering:pixelated;user-select:none;" />
       <div class="relative">
         <h2 class="font-display font-bold text-5xl md:text-6xl tracking-tight mb-5 leading-[0.95]">smash that subscribe button<br/><span class="grad-text">and hit the bell.</span></h2>
         <p class="text-lg text-bear-ink/70 max-w-xl mx-auto mb-10">join the duh bear squad — sub on youtube, jump in the discord, lose a weekend.</p>
@@ -776,6 +816,30 @@ function blockBurst(anchor){
     cd.addEventListener('pointerleave', function(){ cd.style.transform=''; }); }); }
   function init(){ bindTilt('#home .aspect-square',5); }
   if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+<script>
+/* ---------- easter egg: find the bear, he runs off ---------- */
+(function(){
+  var egg = document.querySelector('[data-egg="bear"]');
+  if(!egg) return;
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ egg.remove(); return; }
+  egg.addEventListener('click', function(){
+    if(egg.dataset.used) return;
+    egg.dataset.used = '1';
+    egg.classList.add('is-gone');
+    setTimeout(function(){ if(egg.parentNode) egg.remove(); }, 700);
+    var run = document.createElement('img');
+    run.src = 'images/bear-run.webp';
+    run.alt = '';
+    run.className = 'bear-run';
+    run.setAttribute('aria-hidden','true');
+    run.setAttribute('decoding','async');
+    var done = function(){ if(run.parentNode) run.remove(); };
+    run.addEventListener('animationend', done);
+    setTimeout(done, 2600);
+    document.body.appendChild(run);
+  });
 })();
 </script>
 </body>

@@ -5,10 +5,13 @@ Single self-contained page for the YouTuber Bearzo1_YT.
 Deploys to: bearzo.club
 
 FILES
-  index.html   The entire site (HTML + CSS + JS in one file).
+  index.html    The site (HTML + CSS + JS in one file).
+  credits.html  Credits / attribution page, linked from the footer.
+  images/       All artwork (Nova Skin renders, favicon, the two bear cutouts).
+                UPLOAD THIS FOLDER TOO - without it the site shows no images.
 
 TO DEPLOY
-  Upload index.html to the web host for bearzo.club (keep the name index.html).
+  Upload index.html, credits.html AND the images/ folder (keep the names).
   Any static host works — Netlify (drag the folder in), Cloudflare Pages,
   GitHub Pages, Vercel, or plain shared hosting.
 
@@ -24,7 +27,7 @@ NEEDS INTERNET AT VIEW TIME (loaded externally, not bundled):
 
 CONTENT
   - Real most-popular videos (top 6, tap to play inline)
-  - Games, Duh Bear Squad Minecraft server (duhbearsquad.ddns.net:4023) + rules
+  - Games, Duh Bear Squad Minecraft server (DuhBearzoSquad.ddns.net:4609, bedrock port 4609) + rules
   - Community rules (10) + Minecraft server rules (8)
   - Socials: YouTube @bearzo1_yt, Discord discord.gg/fMZnRZEeT8,
     TikTok @bearzo1_yt, Twitch twitch.tv/bearzo1_yt
@@ -55,3 +58,11 @@ PRODUCTION PASS (2026-07-31) — what "exceptional" added on top of the base sit
     shimmer limited to the hero headline); canvas pauses when the tab is hidden.
 
 Theme: black + Minecraft grass-green, Space Grotesk / pixel fonts.
+
+EASTER EGG (2026-09-06)
+  A faint bear photo hides in the top-right of the "games on the menu." section
+  (7.5% opacity). Click him: he vanishes and a cut-out bear runs across the
+  bottom of the screen in 2s, then it's gone until you refresh. Hidden entirely
+  in accessibility mode / prefers-reduced-motion.
+  The rollercoaster shot is now a full-bleed sticky panel between the server and
+  community sections - it pins for one screen with nothing on top of it.
