@@ -6,12 +6,16 @@ Deploys to: bearzo.club
 
 FILES
   index.html    The site (HTML + CSS + JS in one file).
-  credits.html  Credits / attribution page, linked from the footer.
-  images/       All artwork (Nova Skin renders, favicon, the two bear cutouts).
-                UPLOAD THIS FOLDER TOO - without it the site shows no images.
+  credits.html   Credits / attribution page, linked from the footer.
+  changelog.html Dated log of every change, linked from the footer next to credits.
+                 Newest entry goes at the TOP of <ul class="log">; give it
+                 class="entry now" and move the "now" class off the old one.
+                 Tags: add / rem / chg / fix.
+  images/        All artwork (Nova Skin renders, favicon, the two bear cutouts).
+                 UPLOAD THIS FOLDER TOO - without it the site shows no images.
 
 TO DEPLOY
-  Upload index.html, credits.html AND the images/ folder (keep the names).
+  Upload index.html, credits.html, changelog.html AND the images/ folder.
   Any static host works — Netlify (drag the folder in), Cloudflare Pages,
   GitHub Pages, Vercel, or plain shared hosting.
 
@@ -61,8 +65,11 @@ Theme: black + Minecraft grass-green, Space Grotesk / pixel fonts.
 
 EASTER EGG (2026-09-06)
   A faint bear photo hides in the top-right of the "games on the menu." section
-  (7.5% opacity). Click him: he vanishes and a cut-out bear runs across the
-  bottom of the screen in 2s, then it's gone until you refresh. Hidden entirely
-  in accessibility mode / prefers-reduced-motion.
-  The rollercoaster shot is now a full-bleed sticky panel between the server and
-  community sections - it pins for one screen with nothing on top of it.
+  (8% opacity, 246px, brightens to 18% on hover). Click him: a goofy running
+  sound plays, he vanishes, and a cut-out bear runs across the bottom of the
+  screen in 2s. Then it's gone until you refresh. Hidden entirely in
+  accessibility mode / prefers-reduced-motion.
+  THE SOUND IS INLINED as a base64 data URI inside index.html (#bearSfx, 37KB)
+  on purpose - there is no separate audio file to upload or forget.
+  The rollercoaster shot is a full-bleed band between the server and community
+  sections - full width, nothing on top of it, no scroll pinning.
